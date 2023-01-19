@@ -21,6 +21,7 @@ function DashboardFeed() {
   const fetchImageData = async (event) => {
     try {
       const resultList = await pb.collection("upload").getList(1, 20);
+      pb.autoCancellation(false);
       console.log(resultList);
       setImageList(resultList);
     } catch (e) {
@@ -57,9 +58,9 @@ function DashboardFeed() {
         </label>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-4 p-4">
-        <div className="flex justify-between items-center bg-white p-2 border rounded-md">
           {imageList?.items.map((data, index) => (
-            <div className="flex" key={index}>
+        <div key={index} className="flex justify-between items-center bg-white p-2 border rounded-md">
+           
               <img
                 src={getImageURL(data.collectionId, data.id, data.field, 100)}
                 alt=""
@@ -71,9 +72,6 @@ function DashboardFeed() {
                   {moment(data.created).format("DD/MM/YYYY")}
                 </p>
               </div>
-            </div>
-          ))}
-
           <svg
             fill="none"
             stroke="currentColor"
@@ -89,7 +87,8 @@ function DashboardFeed() {
               d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
             />
           </svg>
-        </div>
+            </div>
+          ))}
       </div>
     </div>
   );
